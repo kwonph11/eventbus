@@ -12,28 +12,11 @@ public class Sample {
             this.txt = txt;
         }
     }
-
-
-    public static class Sender
-    {
-        SyncEventBus eventBus;
-        public Sender(SyncEventBus eventBus)
-        {
-            this.eventBus = eventBus;
-        }
-
-        public void sendMessage(String txt)
-        {
-            eventBus.publish(new Message(txt));
-        }
-    }
-
+    
     public static class Receiver
     {
-        SyncEventBus eventBus;
         public Receiver(SyncEventBus eventBus)
         {
-            this.eventBus = eventBus;
             eventBus.subscribe(Message.class, this::onMessage);
         }
 
@@ -46,9 +29,7 @@ public class Sample {
     public static void main(String[] args) {
 
         SyncEventBus eventBus = new SyncEventBus();
-        Sender sender = new Sender(eventBus);
         Receiver receiver = new Receiver(eventBus);
-
-        sender.sendMessage("Hello World");
+        eventBus.publish(new Message(txt));
     }
 }
